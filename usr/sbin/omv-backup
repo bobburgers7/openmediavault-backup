@@ -119,9 +119,10 @@ case ${method} in
 
     ddfull)
         echo "Using dd full disk..."
-        dd if=${root} bs=1M conv=sync,noerror status=progress | gzip -c > "${backupDir}/${BACKUP_FILE_PREFIX}-${date}.ddfull.gz"
+        dd if=${root} bs=1M conv=sync,noerror status=progress of="${backupDir}/${BACKUP_FILE_PREFIX}-${date}.ddfull"
         sync
         sync
+        pishrink.sh -z "${backupDir}/${BACKUP_FILE_PREFIX}-${date}.ddfull"
         touch "${backupDir}/${BACKUP_FILE_PREFIX}"*-${date}.ddfull.gz
         purgeOld
         ;;
